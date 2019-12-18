@@ -1,0 +1,8 @@
+gym
+tensorflow==1.*
+baselines
+dataclasses
+scikit-image
+PyGeometry
+pyyaml
+pyglet
