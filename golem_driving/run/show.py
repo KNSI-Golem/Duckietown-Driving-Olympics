@@ -2,7 +2,7 @@ import pyglet
 from pyglet.window import key
 
 
-def show(env, agent):
+def show(env, agent, config):
     obs = env.reset()
     env.render()
 

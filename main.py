@@ -2,40 +2,27 @@ import argparse
 import os
 import sys
 
-print(sys.executable)
-
 # Add gym_duckietown to path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'gym-duckietown'))
 
-from golem_driving.agents import get_agent
+from golem_driving.modes import modes
 from golem_driving.envs import add_env_args, get_env_from_args
-from golem_driving.run.show import show
-
-
-modes = {
-    'show': show
-}
-
-
-def run(mode, env, agent):
-    if mode not in modes:
-        print(f'Invalid mode: {mode}')
-    else:
-        modes[mode](env, agent)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', required=True)
-    parser.add_argument('--agent', required=True)
+    parser.add_argument('--mode', required=True, type=str, choices=list(modes.keys()))
+    parser.add_argument('--config', required=True, type=str)
     add_env_args(parser)
     args = parser.parse_args()
 
-    with get_env_from_args(args, discrete=False) as env:
-        try:
-            agent = get_agent(args.agent)
-        except KeyError:
-            print(f'Invalid agent: {agent}')
-            exit(-1)
+    mode = modes.get(args.mode)
 
-        run(mode=args.mode, env=env, agent=agent)
+    with open(args.config, 'r') as config_file:
+        config = mode.config()
+        config.load(config_file)
+
+    with get_env_from_args(args, discrete=False) as env:
+        agent = config.build_agent()
+
+        mode.run(env=env, agent=agent, config=config)
