@@ -10,6 +10,6 @@ class Mode(object):
 
 
 modes = {
-    'show': Mode(show, configs.ShowConfig)
+    'show': Mode(show, configs.ShowConfig),
     'train': Mode(train, configs.TrainConfig)
 }
