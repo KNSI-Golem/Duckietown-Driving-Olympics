@@ -8,9 +8,9 @@ def train(env, agent, config):
 
     for _ in range(config.steps):
         act = trainer.model_step(obs)
-        obs, done = env.step(act)
+        obs, reward, done, info = env.step(act)
 
-        trainer.register_obs(obs, done)
+        trainer.register_obs(obs, done, reward)
 
         if done:
             obs = env.reset()
