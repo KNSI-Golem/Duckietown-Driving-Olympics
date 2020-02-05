@@ -1,12 +1,16 @@
 import numpy as np
 from pyglet.window import key
+from numbers import Number
+from typing import Any, Union, Mapping
+
+from golem_driving.agents.agent import Agent
 
 
-class ManualAgent(object):
+class ManualAgent(Agent):
     def __init__(self):
         self.key_handler = None
 
-    def act(self, obs):
+    def act(self, obs: np.ndarray) -> Union[np.ndarray, Number]:
         action = np.array([0.0, 0.0])
         if self.key_handler[key.UP]:
             action = np.array([0.44, 0.0])
@@ -21,5 +25,5 @@ class ManualAgent(object):
 
         return action
 
-    def set_key_handler(self, key_handler):
+    def set_key_handler(self, key_handler: Mapping[int, Any]) -> type(None):
         self.key_handler = key_handler
