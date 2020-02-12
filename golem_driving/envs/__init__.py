@@ -1,8 +1,9 @@
 import gym
 from argparse import ArgumentParser
-from typing import Callable, Iterable
+from typing import Callable, Iterable, Union
 
 from gym_duckietown.envs.duckietown_env import DuckietownEnv
+from gym_duckietown.simulator import Simulator
 
 
 def add_env_args(parser: ArgumentParser) -> type(None):
@@ -18,8 +19,8 @@ def add_env_args(parser: ArgumentParser) -> type(None):
 
 def get_env_from_args(
         args,
-        wrappers: Iterable[Callable[[gym.Env], gym.Env]]
-) -> Callable[[], gym.Env]:
+        wrappers: Iterable[Callable[[Union[Simulator, gym.Wrapper]], Union[Simulator, gym.Wrapper]]]
+) -> Callable[[], Union[Simulator, gym.Wrapper]]:
     def builder():
         if args.env_name is None:
             env = DuckietownEnv(

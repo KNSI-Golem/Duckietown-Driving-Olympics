@@ -2,10 +2,11 @@ import functools
 import importlib
 import os
 import pickle
-from typing import Any, Callable, Mapping, Tuple, Optional, IO
+from typing import Any, Callable, Mapping, Tuple, Optional, IO, Union
 import yaml
 
 import gym
+from gym_duckietown.simulator import Simulator
 
 from golem_driving.agents.agent import Agent
 
@@ -62,7 +63,7 @@ class TrainConfig(Config):
 
         super(TrainConfig, self).__init__()
 
-    def build_trainer(self, agent: Agent, env: gym.Env) -> Any:
+    def build_trainer(self, agent: Agent, env: Union[Simulator, gym.Wrapper]) -> Any:
         return self.trainer(agent, env)
 
     def _load(self, file: Mapping[str, Any]) -> type(None):
