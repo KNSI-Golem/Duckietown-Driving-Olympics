@@ -5,7 +5,7 @@ import pickle
 from typing import Any, Callable, Mapping, Tuple, Optional, IO
 import yaml
 
-from gym_duckietown.simulator import Simulator
+import gym
 
 from golem_driving.agents.agent import Agent
 
@@ -14,6 +14,7 @@ class Config(object):
     def __init__(self):
         self.agent = None
         self.agent_file = None
+        self.env_wrappers = None
 
     def _load_object(self, obj_config: Mapping[str, Any]) -> Tuple[Callable, Optional[str]]:
         builder = importlib.import_module(obj_config['module']).__dict__[obj_config['builder']]
@@ -31,6 +32,10 @@ class Config(object):
 
     def _load_base(self, file: Mapping[str, Any]) -> type(None):
         self.agent, self.agent_file = self._load_object(file['agent'])
+
+        self.env_wrappers =\
+            [self._load_object(wrapper)[0] for wrapper in file['env_wrappers']]\
+            if 'env_wrappers' in file else []
 
     def _load(self, file: Mapping[str, Any]) -> type(None):
         raise NotImplementedError
@@ -57,7 +62,7 @@ class TrainConfig(Config):
 
         super(TrainConfig, self).__init__()
 
-    def build_trainer(self, agent: Agent, env: Simulator) -> Any:
+    def build_trainer(self, agent: Agent, env: gym.Env) -> Any:
         return self.trainer(agent, env)
 
     def _load(self, file: Mapping[str, Any]) -> type(None):

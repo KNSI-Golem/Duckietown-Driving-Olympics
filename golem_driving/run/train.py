@@ -1,12 +1,14 @@
 import pickle
+from typing import Union
 
+import gym
 from gym_duckietown.simulator import Simulator
 
 from golem_driving.agents.agent import Agent
 from golem_driving.config import TrainConfig
 
 
-def train(env: Simulator, agent: Agent, config: TrainConfig) -> type(None):
+def train(env: Union[gym.Wrapper, Simulator], agent: Agent, config: TrainConfig) -> type(None):
     obs = env.reset()
     trainer = config.build_trainer(agent, env)
     trainer.register_obs(obs)
