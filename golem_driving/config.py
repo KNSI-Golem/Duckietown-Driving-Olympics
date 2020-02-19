@@ -54,13 +54,16 @@ class TrainConfig(Config):
         self.trainer = None
         self.steps = None
         self.save_agent = None
+        self.trainer_file = None
 
         super(TrainConfig, self).__init__()
 
     def build_trainer(self, agent: Agent, env: Simulator) -> Any:
+        # TODO: change function to load trainer from self.trainer_file.
+        # See Config.build_agent()
         return self.trainer(agent, env)
 
     def _load(self, file: Mapping[str, Any]) -> type(None):
-        self.trainer = self._load_object(file['trainer'])
+        self.trainer, self.trainer_file = self._load_object(file['trainer'])
         self.steps = file.get('steps', 1e6)
         self.save_agent = file.get('save_agent', True)
