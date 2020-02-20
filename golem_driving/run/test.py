@@ -1,11 +1,14 @@
+from typing import Union
 import numpy as np
+
+import gym
 from gym_duckietown.simulator import Simulator
 
 from golem_driving.agents.agent import Agent
 from golem_driving.config import TestConfig
 
 
-def test(env: Simulator, agent: Agent, config: TestConfig) -> type(None):
+def test(env: Union[gym.Wrapper, Simulator], agent: Agent, config: TestConfig) -> type(None):
     reward_list = []
     steps_list = []
 
