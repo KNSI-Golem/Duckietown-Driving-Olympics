@@ -65,5 +65,5 @@ class TrainConfig(Config):
 
     def _load(self, file: Mapping[str, Any]) -> type(None):
         self.trainer, self.trainer_file = self._load_object(file['trainer'])
-        self.steps = file.get('steps', 1e6)
+        self.steps = int(file.get('steps', 1e6))
         self.save_agent = file.get('save_agent', True)
