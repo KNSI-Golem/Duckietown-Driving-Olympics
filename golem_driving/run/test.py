@@ -1,7 +1,11 @@
 import numpy as np
+from gym_duckietown.simulator import Simulator
+
+from golem_driving.agents.agent import Agent
+from golem_driving.config import TestConfig
 
 
-def test(env, agent, config):
+def test(env: Simulator, agent: Agent, config: TestConfig) -> type(None):
     reward_list = []
     steps_list = []
 

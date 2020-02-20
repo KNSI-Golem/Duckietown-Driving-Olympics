@@ -72,5 +72,5 @@ class TestConfig(Config):
 
         super(TestConfig, self).__init__()
 
-    def _load(self, file):
+    def _load(self, file: Mapping[str, Any]) -> type(None):
         self.episodes = file.get('episodes', 10)
