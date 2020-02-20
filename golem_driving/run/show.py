@@ -1,8 +1,12 @@
 import pyglet
 from pyglet.window import key
+from gym_duckietown.simulator import Simulator
+
+from golem_driving.agents.agent import Agent
+from golem_driving.config import ShowConfig
 
 
-def show(env, agent, config):
+def show(env: Simulator, agent: Agent, config: ShowConfig) -> type(None):
     obs = env.reset()
     env.render()
 
