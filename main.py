@@ -17,7 +17,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     mode = modes.get(args.mode)
-
+    directory = args.dir
+    print(directory)
     with open(args.config, 'r') as config_file:
         config = mode.config()
         config.load(config_file)
@@ -25,4 +26,4 @@ if __name__ == '__main__':
     with get_env_from_args(args, discrete=False) as env:
         agent = config.build_agent()
 
-        mode.run(env=env, agent=agent, config=config)
+        mode.run(env=env, agent=agent, config=config, directory=directory)

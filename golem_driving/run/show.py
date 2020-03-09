@@ -3,8 +3,8 @@ from gym.wrappers import Monitor
 from pyglet.window import key
 
 
-def show(env, agent, config):
-    env = Monitor(env, './video', video_callable=lambda episode_id: True, force=True)
+def show(env, agent, config, directory):
+    env = Monitor(env, directory, video_callable=lambda episode_id: True, force=True)
     obs = env.reset()
     env.render()
 
