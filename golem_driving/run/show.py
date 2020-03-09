@@ -1,9 +1,14 @@
 import pyglet
 from gym.wrappers import Monitor
 from pyglet.window import key
+from gym_duckietown.simulator import Simulator
+
+from golem_driving.agents.agent import Agent
+from golem_driving.config import ShowConfig
 
 
-def show(env, agent, config, directory):
+def show(env: Simulator, agent: Agent, config: ShowConfig, directory) -> type(None):
+  
     env = Monitor(env, directory, video_callable=lambda episode_id: True, force=True)
     obs = env.reset()
     env.render()

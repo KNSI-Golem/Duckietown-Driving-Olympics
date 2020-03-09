@@ -1,16 +1,21 @@
 import pickle
 
+from gym_duckietown.simulator import Simulator
 
-def train(env, agent, config):
+from golem_driving.agents.agent import Agent
+from golem_driving.config import TrainConfig
+
+
+def train(env: Simulator, agent: Agent, config: TrainConfig) -> type(None):
     obs = env.reset()
-    trainer = config.build_trainer(agent)
+    trainer = config.build_trainer(agent, env)
     trainer.register_obs(obs)
 
     for _ in range(config.steps):
         act = trainer.model_step(obs)
-        obs, done = env.step(act)
+        obs, reward, done, info = env.step(act)
 
-        trainer.register_obs(obs, done)
+        trainer.register_obs(obs, done, reward)
 
         if done:
             obs = env.reset()

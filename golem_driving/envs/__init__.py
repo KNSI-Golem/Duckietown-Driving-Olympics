@@ -1,9 +1,13 @@
 import gym
+from argparse import ArgumentParser
+from typing import Callable
+
 from gym_duckietown.envs.duckietown_env import DuckietownEnv
+from gym_duckietown.simulator import Simulator
 from gym_duckietown.wrappers import DiscreteWrapper
 
 
-def add_env_args(parser):
+def add_env_args(parser: ArgumentParser) -> type(None):
     parser.add_argument('--env-name', default=None)
     parser.add_argument('--map-name', default='loop_empty')
     parser.add_argument('--distortion', default=False, action='store_true')
@@ -14,7 +18,7 @@ def add_env_args(parser):
     parser.add_argument('--frame-rate', default=None, help='number of frames per second')
     parser.add_argument('--dir', default='./video', help='directory in which recordings are stored')
 
-def get_env_from_args(args, discrete=False):
+def get_env_from_args(args, discrete: bool=False) -> Callable[[], Simulator]:
     def builder():
         if args.env_name is None:
             env = DuckietownEnv(
