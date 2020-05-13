@@ -64,3 +64,13 @@ class TrainConfig(Config):
         self.trainer = self._load_object(file['trainer'])
         self.steps = file.get('steps', 1e6)
         self.save_agent = file.get('save_agent', True)
+
+
+class TestConfig(Config):
+    def __init__(self):
+        self.episodes = None
+
+        super(TestConfig, self).__init__()
+
+    def _load(self, file: Mapping[str, Any]) -> type(None):
+        self.episodes = file.get('episodes', 10)
