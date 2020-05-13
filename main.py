@@ -22,7 +22,7 @@ if __name__ == '__main__':
         config = mode.config()
         config.load(config_file)
 
-    with get_env_from_args(args, discrete=False) as env:
+    with get_env_from_args(args, wrappers=config.env_wrappers) as env:
         agent = config.build_agent()
 
         mode.run(env=env, agent=agent, config=config)
