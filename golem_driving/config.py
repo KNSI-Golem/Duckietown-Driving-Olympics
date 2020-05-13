@@ -71,3 +71,13 @@ class TrainConfig(Config):
 
         assert self.trainer_file is None,\
             'This feature is not supported, updating current env and model will be required'
+
+
+class TestConfig(Config):
+    def __init__(self):
+        self.episodes = None
+
+        super(TestConfig, self).__init__()
+
+    def _load(self, file: Mapping[str, Any]) -> type(None):
+        self.episodes = file.get('episodes', 10)
