@@ -16,9 +16,10 @@ def add_env_args(parser: ArgumentParser) -> type(None):
     parser.add_argument('--domain-rand', action='store_true', help='enable domain randomization')
     parser.add_argument('--frame-skip', default=1, type=int, help='number of frames to skip')
     parser.add_argument('--frame-rate', default=None, help='number of frames per second')
-    parser.add_argument('--dir', default='./video', help='directory in which recordings are stored')
+    parser.add_argument('--dir', default=None, help='directory in which recordings are stored')
 
-def get_env_from_args(args, discrete: bool=False) -> Callable[[], Simulator]:
+
+def get_env_from_args(args, discrete: bool = False) -> Callable[[], Simulator]:
     def builder():
         if args.env_name is None:
             env = DuckietownEnv(

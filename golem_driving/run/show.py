@@ -1,10 +1,17 @@
+import string
+
 import pyglet
 from gym.wrappers import Monitor
+from gym_duckietown.simulator import Simulator
 from pyglet.window import key
 
+from golem_driving.agents.agent import Agent
+from golem_driving.config import ShowConfig
 
-def show(env, agent, config, directory):
-    env = Monitor(env, directory, video_callable=lambda episode_id: True, force=True)
+
+def show(env: Simulator, agent: Agent, config: ShowConfig, directory: string) -> type(None):
+    if directory is not None:
+        env = Monitor(env, directory, video_callable=lambda episode_id: True, force=True)
     obs = env.reset()
     env.render()
 
