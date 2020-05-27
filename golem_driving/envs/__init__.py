@@ -1,10 +1,9 @@
 import gym
 from argparse import ArgumentParser
-from typing import Callable
+from typing import Callable, Iterable, Union
 
 from gym_duckietown.envs.duckietown_env import DuckietownEnv
 from gym_duckietown.simulator import Simulator
-from gym_duckietown.wrappers import DiscreteWrapper
 
 
 def add_env_args(parser: ArgumentParser) -> type(None):
@@ -18,7 +17,10 @@ def add_env_args(parser: ArgumentParser) -> type(None):
     parser.add_argument('--frame-rate', default=None, help='number of frames per second')
 
 
-def get_env_from_args(args, discrete: bool=False) -> Callable[[], Simulator]:
+def get_env_from_args(
+        args,
+        wrappers: Iterable[Callable[[Union[Simulator, gym.Wrapper]], Union[Simulator, gym.Wrapper]]]
+) -> Callable[[], Union[Simulator, gym.Wrapper]]:
     def builder():
         if args.env_name is None:
             env = DuckietownEnv(
@@ -31,7 +33,9 @@ def get_env_from_args(args, discrete: bool=False) -> Callable[[], Simulator]:
             )
         else:
             env = gym.make(args.env_name)
+        for wrapper in wrappers:
+            env = wrapper(env)
 
-        return DiscreteWrapper(env) if discrete else env
+        return env
 
     return builder()
