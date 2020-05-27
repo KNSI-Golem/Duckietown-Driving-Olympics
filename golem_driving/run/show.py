@@ -1,12 +1,15 @@
+from typing import Union
 import pyglet
 from pyglet.window import key
+
+import gym
 from gym_duckietown.simulator import Simulator
 
 from golem_driving.agents.agent import Agent
 from golem_driving.config import ShowConfig
 
 
-def show(env: Simulator, agent: Agent, config: ShowConfig) -> type(None):
+def show(env: Union[gym.Wrapper, Simulator], agent: Agent, config: ShowConfig) -> type(None):
     obs = env.reset()
     env.render()
 
