@@ -6,3 +6,4 @@ scikit-image
 PyGeometry
 pyyaml
 pyglet
+stable-baselines3[extras]

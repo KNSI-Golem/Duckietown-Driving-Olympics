@@ -1,0 +1,18 @@
+agent:
+  module: golem_driving.trainer.stable_baselines_tf_trainer
+  builder: StableBaselinesTFTrainer
+  kwargs:
+    iter_steps: 1000
+    algo: DDPG
+    policy: MlpPolicy
+  file: sample_trainer.zip
+
+iters: 3
+
+env_wrappers:
+  - module: gym.wrappers
+    builder: ResizeObservation
+    kwargs:
+      shape: !!python/tuple [64, 48]
+  - module: gym.wrappers
+    builder: FlattenObservation

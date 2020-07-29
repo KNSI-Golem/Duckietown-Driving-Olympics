@@ -2,8 +2,4 @@ agent:
   module: golem_driving.agents.agent
   builder: Agent
 
-trainer:
-  module: golem_driving.trainer.trainer
-  builder: Trainer
-  steps: 1e6
-  save_agent: True
+iters: 10

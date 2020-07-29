@@ -1,9 +1,12 @@
 import argparse
+import logging
 import os
 import sys
 
 # Add gym_duckietown to path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'gym-duckietown'))
+
+from gym_duckietown import logger
 
 from golem_driving.modes import modes
 from golem_driving.envs import add_env_args, get_env_from_args
@@ -18,11 +21,13 @@ if __name__ == '__main__':
 
     mode = modes.get(args.mode)
 
+    logger.setLevel(logging.ERROR)
+
     with open(args.config, 'r') as config_file:
         config = mode.config()
         config.load(config_file)
 
     with get_env_from_args(args, wrappers=config.env_wrappers) as env:
-        agent = config.build_agent()
+        agent = config.build_trainer(env) if mode.use_trainer else config.build_agent()
 
         mode.run(env=env, agent=agent, config=config)
