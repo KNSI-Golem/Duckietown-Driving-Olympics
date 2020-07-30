@@ -48,7 +48,7 @@ class Config(object):
             return self.agent_loader(self.agent_file)
         print('Creating agent...')
         return self.agent(*args, **kwargs)
-
+    
     def _load_base(self, file: Mapping[str, Any]) -> type(None):
         self.agent, self.agent_loader, self.agent_file =\
             self._load_serializable_object(file['agent']) if 'agent' in file else (None, None, None)
@@ -84,7 +84,7 @@ class TrainConfig(Config):
 
         if trainer.env is None:
             trainer.set_env(env)
-
+            
         return trainer
         
     def _load(self, file: Mapping[str, Any]) -> type(None):
